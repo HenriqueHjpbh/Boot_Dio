@@ -1,0 +1,57 @@
+menu = """
+___________Menu Bancário_________
+Aperte [D]              Depositar
+Aperte [S]                  Sacar
+Aperte [E]                Extrato
+Aperte [Q]                   Sair
+_________________________________
+=> """
+
+saldo = 0
+limite = 0
+extrato = []
+numeros_saques = 0
+limite_saques = 3
+
+while True:
+
+    escolha = input(menu).strip().upper()
+
+    if escolha == 'D':
+        print('Deposito')
+        deposito = float(input('Digite o valor a ser depositado: '))
+        if deposito < 0:
+            print('Não é possivel depositar valores negativos!')
+        else:
+            saldo += deposito
+            extra_str = f'Deposito R${deposito:.2f}'
+            extrato.append(extra_str)
+    elif escolha == 'S':
+        print('Saque')
+        if numeros_saques ==3:
+            print('Número de saques diarios já atingido!')
+        else:
+            saque = float(input('Digite o valor que deseja sacar: '))
+            if saque > 500:
+                print('Saque superior ao limite maximo por operação!')
+            elif saldo < saque:
+                print('Saldo insuficiente!')
+            else:
+                saldo -= saque
+                extra_str =f'Saque - R${saque:.2f}'
+                extrato.append(extra_str)
+                numeros_saques+=1
+
+    elif escolha == 'E':
+        print('___________Extrato Bancário___________')
+        print()
+        for op in range(0,len(extrato)):
+            print(f'{extrato[op]}')
+        print()
+        print(f'O seu saldo é {saldo:.2f}')
+        print('______________________________________')
+    elif escolha == 'Q':
+        print('Saindo...')
+        break
+    else:
+        print('Operação inválida, por favor selecione novamente a opção desejada.')
